@@ -99,8 +99,15 @@ std::string handleChars(int vkCode, bool shift)
 bool handleShift()
 {
 	if ((GetKeyState(160) & 0x8000) || (GetKeyState(161) & 0x8000))
-	{
 		return true;
-	}
-	else { return false; }
+	else
+		return false;
+}
+
+bool handleCTRL()
+	{
+	if ((GetKeyState(162) & 0x8000) || (GetKeyState(163) & 0x8000))
+		return true;
+	else
+		return false;
 }

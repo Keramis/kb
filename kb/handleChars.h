@@ -4,6 +4,7 @@
 std::string handleChars(int vkCode, bool shift);
 
 bool handleShift();
+bool handleCTRL();
 
 inline bool isCapsEnabled()
 {

