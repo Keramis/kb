@@ -24,6 +24,9 @@
     <ClCompile Include="advStr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="encodeStr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="grabClipboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="encodeStr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

