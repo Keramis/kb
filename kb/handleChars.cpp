@@ -1,47 +1,26 @@
 #include "handleChars.h"
 
+std::string nums[] {")", "!", "@", "#", "$", "%", "^", "&", "*", "("};
+
+std::string handleNumbers(int vkcode, bool shift);
+
 std::string handleChars(int vkCode, bool shift)
 {
 	switch (vkCode)
 	{
-#if 0
 		//handling numbers here:
-		{
-			if (shift)
-			{
+	case 48:
 	case 49:
-		return "!";
-		break;
 	case 50:
-		return "@";
-		break;
 	case 51:
-		return "#";
-		break;
 	case 52:
-		return "$";
-		break;
 	case 53:
-		return "%";
-		break;
 	case 54:
-		return "^";
-		break;
 	case 55:
-		return "&";
-		break;
 	case 56:
-		return "*";
-		break;
 	case 57:
-		return "(";
+		return handleNumbers(vkCode, shift);
 		break;
-	case 58:
-		return ")";
-		break;
-			}
-		}
-#endif
 	case 8:
 		return "BACKSPACE";
 		break;
@@ -60,8 +39,14 @@ std::string handleChars(int vkCode, bool shift)
 	case 186:
 		return (!shift ? ";" : ":");
 		break;
+	case 187:
+		return (!shift ? "=" : "+");
+		break;
 	case 188:
 		return (!shift ? "," : "<");
+		break;
+	case 189:
+		return (!shift ? "-" : "_");
 		break;
 	case 190:
 		return (!shift ? "." : ">");
@@ -94,6 +79,14 @@ std::string handleChars(int vkCode, bool shift)
 		}
 		break;
 	}
+}
+
+std::string handleNumbers(int vkcode, bool shift)
+{
+	if (!shift)
+		return std::string(1, (char)vkcode);
+	else
+		return nums[vkcode - 48]; //only works because numbers are sequential, and so is my array.
 }
 
 bool handleShift()
