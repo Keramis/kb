@@ -105,7 +105,7 @@ bool handleShift()
 }
 
 bool handleCTRL()
-	{
+{
 	if ((GetKeyState(162) & 0x8000) || (GetKeyState(163) & 0x8000))
 		return true;
 	else

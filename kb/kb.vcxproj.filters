@@ -35,5 +35,8 @@
     <ClInclude Include="advStr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="grabClipboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

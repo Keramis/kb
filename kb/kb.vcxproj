@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="advStr.h" />
+    <ClInclude Include="grabClipboard.h" />
     <ClInclude Include="handleChars.h" />
     <ClInclude Include="includes.h" />
   </ItemGroup>
