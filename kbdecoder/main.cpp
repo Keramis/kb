@@ -61,6 +61,36 @@ std::vector<std::string> findStringsBetweenZeroes(std::string& line)
 	return retVec;
 }
 
+std::vector<std::string> convToCharWOffset(std::vector<std::string>& vec, int& offset) //use string for shit like backspace
+{
+	std::vector<std::string> ret{};
+	for (std::string str : vec)
+	{
+		int ch = std::stoi(str) - offset;
+		switch (ch)
+		{
+		case 8:
+			ret.push_back("BACKSPACE");
+			break;
+		case 9:
+			ret.push_back("TAB");
+			break;
+		case 13:
+			ret.push_back("ENTER");
+			break;
+		case 27:
+			ret.push_back("ESC");
+			break;
+		case 32:
+			ret.push_back("SPACE");
+			break;
+		default:
+			ret.push_back(std::string(1, (char)ch));
+			break;
+		}
+	}
+}
+
 //"0 20 0 30 0"
 
 //0 5 0 65 0 19 0 30 0 5
@@ -96,9 +126,10 @@ bool readFile(std::string filename)
 
 int main()
 {
-	std::string testStr = "0200057012075088880540300";
+	
+	/*std::string testStr = "0200057012075088880540300";
 	for (std::string str : findStringsBetweenZeroes(testStr))
 	{
 		std::cout << "STR: [" << str << "]\n";
-	}
+	}*/
 }
