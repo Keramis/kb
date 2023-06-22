@@ -25,10 +25,16 @@ std::vector<std::string> findStringsBetweenZeroes(std::string& line)
 		if (line[0] == '0')
 		{
 			if (line.length() == 1) //catch nasty hanging 0
+			{
 				retVec[retVec.size() - 1] += '0';
+				line.clear();
+				break; //holy shit how did i forget to do this.
+			}
+			else
+			{
+				line.erase(0, 1);
+			}
 		}
-		else
-			line.erase(0, 1);
 
 		/*auto first_zero = line.find_first_of('0');
 		std::cout << "First zero: " << first_zero << '\n';*/
