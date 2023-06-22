@@ -4,8 +4,60 @@
 #include <thread>
 #include <filesystem>
 #include <fstream>
+#include <vector>
+
+/*
+* By decoder logic, encoder should:
+*	At the start of the line, generate a random digit 1-9 to determine offset of number-characters.
+*	Add a '0' character before each number.
+*	NOT add a '0' character after each number (don't do this).
+*	
+* TODO:
+*	Figure out how to (or even if to) handle CTRL (probably not, we have clipboard-logging).
+*/
+
+std::vector<std::string> findStringsBetweenZeroes(std::string& line)
+{
+	std::vector<std::string> retVec{};
+	
+	while (line.length() > 0)
+	{
+		if (line[0] == '0')
+		{
+			if (line.length() == 1) //catch nasty hanging 0
+				retVec[retVec.size() - 1] += '0';
+		}
+		else
+			line.erase(0, 1);
+
+		/*auto first_zero = line.find_first_of('0');
+		std::cout << "First zero: " << first_zero << '\n';*/
+
+		auto first_other_zero = line.find_first_of('0');
+
+		int iterator = 1;
 
 
+		while (line[first_other_zero + iterator] == '0')
+		{
+			++iterator;
+		}
+
+		//now, nextNumStart holds the start to the next number, disregarding the previous 0.
+		size_t nextNumStart = first_other_zero + iterator;
+		
+
+		auto toCut = nextNumStart - 1;
+		retVec.push_back(line.substr(0, toCut));
+		line.erase(0, toCut); //erase afterwards, get ready for the next one!
+	}
+	
+	return retVec;
+}
+
+//"0 20 0 30 0"
+
+//0 5 0 65 0 19 0 30 0 5
 
 bool readFile(std::string filename)
 {
@@ -15,7 +67,19 @@ bool readFile(std::string filename)
 	{
 		while (std::getline(textFile, line))
 		{
+			//used for some socialenginnering (#DONT DELETE THIS FILE) at the top or smth
+			if (line.find_first_of('#') == std::string::npos)
+				continue;
+
 			//operate on the line:
+			if (line[0] == 0)
+			{
+				std::cout << "Massive errror, no offset found!";
+				return -1;
+			}
+
+			int offset = line[0]; //offset for every single int-basd char.
+			line.erase(0, 1); //erase it, we don't need it :)
 
 		}
 		textFile.close();
@@ -26,6 +90,9 @@ bool readFile(std::string filename)
 
 int main()
 {
-	std::string str = "0helddddlo00000";
-
+	std::string testStr = "0200057012075088880540300";
+	for (std::string str : findStringsBetweenZeroes(testStr))
+	{
+		std::cout << "STR: [" << str << "]\n";
+	}
 }
