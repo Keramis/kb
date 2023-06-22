@@ -89,6 +89,7 @@ std::vector<std::string> convToCharWOffset(std::vector<std::string>& vec, int& o
 			break;
 		}
 	}
+	return ret;
 }
 
 //"0 20 0 30 0"
@@ -127,9 +128,9 @@ bool readFile(std::string filename)
 int main()
 {
 	
-	/*std::string testStr = "0200057012075088880540300";
+	std::string testStr = "60010400109001160011600115";
 	for (std::string str : findStringsBetweenZeroes(testStr))
 	{
 		std::cout << "STR: [" << str << "]\n";
-	}*/
+	}
 }
