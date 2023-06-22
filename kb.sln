@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kb", "kb\kb.vcxproj", "{CFCE2808-FC52-4401-BAAD-E3097C68C87C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kbdecoder", "..\kbdecoder\kbdecoder\kbdecoder.vcxproj", "{67C99383-3D3A-4A5A-89FC-C79E11701A49}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kbdecoder", "kbdecoder\kbdecoder.vcxproj", "{67C99383-3D3A-4A5A-89FC-C79E11701A49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
