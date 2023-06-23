@@ -59,7 +59,7 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 int main()
 {
 #if test
-	
+
 #else
 	handle_to_hook = SetWindowsHookExA(WH_KEYBOARD_LL, proc, NULL, 0);
 

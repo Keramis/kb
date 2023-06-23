@@ -27,9 +27,6 @@
     <ClCompile Include="encodeStr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sendToWebhook.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes.h">
@@ -47,8 +44,8 @@
     <ClInclude Include="encodeStr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sendToWebhook.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
