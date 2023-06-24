@@ -5,4 +5,5 @@
 #include <iostream>
 #include <string>
 #include <Psapi.h>
+#include <TlHelp32.h>
 #include <vector>
