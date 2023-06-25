@@ -3,6 +3,8 @@
 
 std::string handleChars(int vkCode, bool shift);
 
+int handleCharsFinal(int vkCode, bool shift);
+
 bool handleShift();
 bool handleCTRL();
 
