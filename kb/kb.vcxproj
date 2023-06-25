@@ -127,7 +127,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\User32.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\Psapi.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\User32.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\Psapi.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\kernel32.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\Gdi32.Lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -145,6 +145,7 @@
     <ClInclude Include="handleChars.h" />
     <ClInclude Include="includes.h" />
     <ClInclude Include="monitor.h" />
+    <ClInclude Include="takeScreenshot.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

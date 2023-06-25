@@ -1,8 +1,15 @@
 #include "monitor.h"
 
-bool doMonitor(int& err, std::wstring &exename)
+std::vector<std::wstring> permittedExes{
+	L"notepad.exe", L"chrome.exe", L"firefox.exe", L"msedge.exe", L"discord.exe", L"cmd.exe"
+}; //modify this if you want to include more/less programs
+
+bool doMonitor(int& err)
 {
+
 	err = 0; //reset error
+	std::wstring exename = L"";
+
 	HWND activeWindow = GetForegroundWindow(); //NOT getactive window, as that is calling-thread specific
 
 	DWORD procID;
@@ -24,7 +31,7 @@ bool doMonitor(int& err, std::wstring &exename)
 	{
 		do
 		{
-			if (procEntry.th32ProcessID == procID)
+			if (procEntry.th32ProcessID == procID) //found the exe name
 			{
 				//close
 				CloseHandle(snapshot);
@@ -34,7 +41,9 @@ bool doMonitor(int& err, std::wstring &exename)
 			}
 		} while (Process32Next(snapshot, &procEntry));
 	}
-	CloseHandle(snapshot);
 
+	//proc32first fails
+	CloseHandle(snapshot);
+	err = 2;
 	return false;
 }
