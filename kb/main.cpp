@@ -10,7 +10,7 @@ std::string storedClipboardContents = "";
 
 //main entry point
 
-HHOOK handle_to_hook;
+HHOOK* handle_to_hook = new HHOOK;
 bool is_shift_on = false; //GLOBAL
 bool is_control_on = false; //global
 
@@ -59,21 +59,26 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 
 #define test false;
 
+__forceinline void startHook()
+{
+	*handle_to_hook = SetWindowsHookExA(WH_KEYBOARD_LL, proc, NULL, 0);
+}
+
 int main()
 {
 #if test
 
 #else
-	handle_to_hook = SetWindowsHookExA(WH_KEYBOARD_LL, proc, NULL, 0);
+	startHook();
 
 	//massive error occurs when initializing hook
-	if (handle_to_hook == NULL)
+	if (*handle_to_hook == NULL)
 	{
 		std::cerr << "MASSIVE ERROR";
 		return 1;
 	}
 
-	//message handling
+	//message handling (while this is running, the program is running)
 	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
 	{
@@ -81,11 +86,8 @@ int main()
 		DispatchMessage(&msg);
 	}
 
-	//sleep the closing of the program
-	while (1)
-	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	}
+	UnhookWindowsHookEx(*handle_to_hook);
+
 #endif
 	return 0;
 }
