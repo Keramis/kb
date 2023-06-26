@@ -57,6 +57,8 @@ bool flushChars(std::vector<int>& vec, std::vector<int> filename, int &count, bo
 		++count;
 		flushChars(vec, filename, count);
 	}
+	//error did not occur.
+	count = 0; //reset
 
 
 	if (!doesFileExist || std::filesystem::file_size(filepath_string) == 0) //text document empty.
