@@ -6,10 +6,10 @@ long encodeStr(std::string& str)
 	//we do this every time the vector gets filled up.
 }
 
-bool flushChars(std::vector<int>& vec, std::string filename, int &count, bool check)
+bool flushChars(std::vector<int>& vec, std::string filename, int &count, bool check, int vecsize)
 {
 	bool doesFileExist = false;
-	if (vec.size() < 1000 && check) //check for debug
+	if (vec.size() < vecsize && check) //check for debug
 		return false;
 
 	if (count > 5)
@@ -29,7 +29,7 @@ bool flushChars(std::vector<int>& vec, std::string filename, int &count, bool ch
 	for (int &str : vec)
 	{
 		mainStr += '0';
-		mainStr += std::to_string(str);
+		mainStr += std::to_string(offset + str);
 		//result: offset 0 str1 0 str2 0 str3 ... 0 strfinal
 	}
 	
@@ -41,20 +41,18 @@ bool flushChars(std::vector<int>& vec, std::string filename, int &count, bool ch
 	if (!textfile.is_open())
 	{
 		++count;
-		std::cout << "file was not open, trying agian...\n";
 		flushChars(vec, filename, count);
 	}
 
 
 	if (!doesFileExist || std::filesystem::file_size(filename) == 0) //text document empty.
 	{
-		std::cout << "File is emtpy, making hashtag readme...\n";
 		textfile << "# DO NOT DELETE THIS FILE\n";
 	}
 
 	textfile.seekp(0, std::ios::end);
-	std::cout << "main string is: " << mainStr << '\n';
 	textfile << mainStr << '\n';
+	vec.clear();
 
 	textfile.close();
 	return true;

