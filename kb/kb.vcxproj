@@ -137,6 +137,7 @@
     <ClCompile Include="advStr.cpp" />
     <ClCompile Include="encodeStr.cpp" />
     <ClCompile Include="handleChars.cpp" />
+    <ClCompile Include="hookProc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="monitor.cpp" />
   </ItemGroup>
@@ -145,6 +146,7 @@
     <ClInclude Include="encodeStr.h" />
     <ClInclude Include="grabClipboard.h" />
     <ClInclude Include="handleChars.h" />
+    <ClInclude Include="hookProc.h" />
     <ClInclude Include="includes.h" />
     <ClInclude Include="monitor.h" />
     <ClInclude Include="takeScreenshot.h" />

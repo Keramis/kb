@@ -2,9 +2,48 @@
 #include "includes.h"
 #include <gdiplus.h>
 
-int GetEncoderClsid(const WCHAR* format, CLSID* pClsid);
 
-void save_ss_as_jpeg(std::wstring filename, HBITMAP hBitMap)
+inline int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
+{
+    UINT num = 0; // number of image encoders
+    UINT size = 0; // size of the image encoder array in bytes
+
+    // Get the size of the image encoder array
+    Gdiplus::GetImageEncodersSize(&num, &size);
+
+    if (size == 0)
+    {
+        return -1; // No image encoders found
+    }
+
+    // Allocate memory for the image encoder array
+    Gdiplus::ImageCodecInfo* pImageCodecInfo = (Gdiplus::ImageCodecInfo*)(malloc(size));
+
+    if (pImageCodecInfo == NULL)
+    {
+        return -1; // Failed to allocate memory
+    }
+
+    // Get the image encoder array
+    Gdiplus::GetImageEncoders(num, size, pImageCodecInfo);
+
+    // Search for the specified format in the image encoder array
+    for (UINT i = 0; i < num; ++i)
+    {
+        if (wcscmp(pImageCodecInfo[i].MimeType, format) == 0)
+        {
+            *pClsid = pImageCodecInfo[i].Clsid; // Found the matching encoder
+            free(pImageCodecInfo); // Free the allocated memory
+            return i; // Return the index of the encoder
+        }
+    }
+
+    free(pImageCodecInfo); // Free the allocated memory
+
+    return -1; // No matching encoder found
+}
+
+inline void save_ss_as_jpeg(std::wstring filename, HBITMAP hBitMap)
 {
 	Gdiplus::Bitmap bitmap(hBitMap, NULL);
 	CLSID jpegClsid;
@@ -44,44 +83,4 @@ __forceinline void takeScreenshot(std::wstring filename)
     DeleteDC(hMemDC);
     ReleaseDC(NULL, hScreenDC);
     Gdiplus::GdiplusShutdown(gdiplustoken);
-}
-
-int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
-{
-    UINT num = 0; // number of image encoders
-    UINT size = 0; // size of the image encoder array in bytes
-
-    // Get the size of the image encoder array
-    Gdiplus::GetImageEncodersSize(&num, &size);
-
-    if (size == 0)
-    {
-        return -1; // No image encoders found
-    }
-
-    // Allocate memory for the image encoder array
-    Gdiplus::ImageCodecInfo* pImageCodecInfo = (Gdiplus::ImageCodecInfo*)(malloc(size));
-
-    if (pImageCodecInfo == NULL)
-    {
-        return -1; // Failed to allocate memory
-    }
-
-    // Get the image encoder array
-    Gdiplus::GetImageEncoders(num, size, pImageCodecInfo);
-
-    // Search for the specified format in the image encoder array
-    for (UINT i = 0; i < num; ++i)
-    {
-        if (wcscmp(pImageCodecInfo[i].MimeType, format) == 0)
-        {
-            *pClsid = pImageCodecInfo[i].Clsid; // Found the matching encoder
-            free(pImageCodecInfo); // Free the allocated memory
-            return i; // Return the index of the encoder
-        }
-    }
-
-    free(pImageCodecInfo); // Free the allocated memory
-
-    return -1; // No matching encoder found
 }
