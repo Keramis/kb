@@ -26,3 +26,5 @@ The second project, `kbdecoder`, is used for inputting the encoded text document
 The encryption isn't real encryption. And, sadly, I can't even null-pad anymore due to the shitty string logic and my own shitty understanding.
 
 Now, integers representing strings are separated by vertical line characters, `'|'`. This is then fed into `kbdecoder`, which just separates the numbers from the vertical lines, and subtracts the given offset that was at the beginning of the line.
+
+Of course, I'll try to update this when possible with possible double or triple null-padding, as to keep the victim (if they find the text file) unaware of the purpose of the text file, as as it is right now with vertical lines separating, it's fairly obvious what's going on.
