@@ -60,7 +60,6 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 #else
 
 		flushChars(savedChars, pathString, error_count, true, STRING_VECTOR_MAX_SIZE);
-		std::cout << savedChars.size() << '\n';
 
 #endif
 	}
