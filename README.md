@@ -23,16 +23,6 @@ The second project, `kbdecoder`, is used for inputting the encoded text document
 ---
 
 ## The ""encryption""
-The encryption isn't really encryption, since it can be reverse-engineered with minimal effort on the user's end. All it does is null-pad lines in a text document, along with offsetting them by a random number that is determined at the line creation based on `mersenne twister` and the current `tick count`.
+The encryption isn't real encryption. And, sadly, I can't even null-pad anymore due to the shitty string logic and my own shitty understanding.
 
-Here's an example string: `7012060053019005308`
-
-Decoding this string is fairly simple. The number at the beginning (which can't be a 0, it has to be an integer from 1-9), represents the `offset` that each character in the string will have. The numbers in-between the zeroes are the integer representations of said characters, casted by default simply with `(int)ch`, `ch` being the character.
-
-Splitting up the string we get:
-
-`7 0 12 0 60 0 53 0 190 0 53 0 8`
-
-Keep in mind that the zeroes are not characters, but are there to put "spaces" in-between the characters, just to make the victim second-guess what this text document is, if they ever find it. I understand that this is not roubst encryption, but this is not a robust keylogger, so if you want to act maliciously, refer to the disclaimer at the top.
-
-Anyways, to decode the string, all we have to do is subtract `7` from each integer here, which would give us the completed string.
+Now, integers representing strings are separated by vertical line characters, `'|'`. This is then fed into `kbdecoder`, which just separates the numbers from the vertical lines, and subtracts the given offset that was at the beginning of the line.
