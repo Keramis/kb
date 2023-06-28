@@ -25,7 +25,7 @@ int main()
 
 	//hide window on startup.
 	//if you can get this to function under WINAPI WinMain, go for it. Gave me an error, so this is a band-aid fix of sorts.
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
+	//ShowWindow(GetConsoleWindow(), SW_HIDE);
 
 	startHook();
 

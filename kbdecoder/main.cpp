@@ -7,58 +7,29 @@
 #include <vector>
 
 /*
-* By decoder logic, encoder should:
-*	At the start of the line, generate a random digit 1-9 to determine offset of number-characters.
-*	Add a '0' character before each number.
-*	NOT add a '0' character after each number (don't do this).
-*	
-* TODO:
-*	Figure out how to (or even if to) handle CTRL (probably not, we have clipboard-logging).
+	Decoder logic changed, we're using '|' to separate numbers.
+	This is because fucking around with zeroes did not do us too well.
 */
 
-std::vector<std::string> findStringsBetweenZeroes(std::string& line)
+std::vector<int> findNumsBetweenChars(std::string& str, char ch)
 {
-	std::vector<std::string> retVec{};
-	
-	while (line.length() > 0)
+	std::vector<int> ret{};
+	std::string off = str.substr(0, 1);
+	int offset = std::stoi(off); //why can't we have choi AND stoi :(
+
+	str.erase(0, 1); //erase offset
+	while (str.length() > 0)
 	{
-		if (line[0] == '0')
-		{
-			if (line.length() == 1) //catch nasty hanging 0
-			{
-				retVec[retVec.size() - 1] += '0';
-				line.clear();
-				break; //holy shit how did i forget to do this.
-			}
-			else
-			{
-				line.erase(0, 1);
-			}
-		}
+		auto first = str.find_first_of(ch);
+		auto second = str.find(ch, first + 1);
+		auto num = str.substr(first + 1, second - 1);
 
-		/*auto first_zero = line.find_first_of('0');
-		std::cout << "First zero: " << first_zero << '\n';*/
+		auto realnum = std::stoi(num) - offset;
+		ret.push_back(realnum);
 
-		auto first_other_zero = line.find_first_of('0');
-
-		int iterator = 1;
-
-
-		while (line[first_other_zero + iterator] == '0')
-		{
-			++iterator;
-		}
-
-		//now, nextNumStart holds the start to the next number, disregarding the previous 0.
-		size_t nextNumStart = first_other_zero + iterator;
-		
-
-		auto toCut = nextNumStart - 1;
-		retVec.push_back(line.substr(0, toCut));
-		line.erase(0, toCut); //erase afterwards, get ready for the next one!
+		str.erase(0, second - first);
 	}
-	
-	return retVec;
+	return ret;
 }
 
 std::vector<std::string> convToCharWOffset(std::vector<std::string>& vec, int& offset) //use string for shit like backspace
@@ -127,10 +98,16 @@ bool readFile(std::string filename)
 
 int main()
 {
-	
-	std::string testStr = "60010400109001160011600115";
-	for (std::string str : findStringsBetweenZeroes(testStr))
+	std::cout << "Enter test string...\n";
+	std::string testStr = "";
+	std::cin >> testStr;
+
+	std::vector<int> a = findNumsBetweenChars(testStr, '|');
+
+	for (int integer : a)
 	{
-		std::cout << "STR: [" << str << "]\n";
+		std::cout << integer << '\n';
 	}
+
+	
 }

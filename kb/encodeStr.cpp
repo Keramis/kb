@@ -42,9 +42,8 @@ bool flushChars(std::vector<int>& vec, std::vector<int> filename, int &count, bo
 	//make main string
 	for (int &str : vec)
 	{
-		mainStr += '0';
+		mainStr += '|';
 		mainStr += std::to_string(offset + str);
-		//result: offset 0 str1 0 str2 0 str3 ... 0 strfinal
 	}
 	
 	if (std::filesystem::exists(filepath_string))
